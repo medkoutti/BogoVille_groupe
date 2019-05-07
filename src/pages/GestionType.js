@@ -10,7 +10,7 @@ export default class GestionType extends React.Component{
         super(props);
         this.state = {
             open: false,
-            header: [{id: "ID", nom: "Nom" , description: "Description"}],
+            header: [{id: "ID", nom: "nom" , description: "Description"}],
             listRow: [
                 {id: 1, nom: "Nid de poule" , description: "Genre de trou dans la rue yo"},
                 {id: 2, nom: "Borne fontaine" , description: "Je sais pas c quoi mais criss ca coule"},

@@ -2,51 +2,49 @@ import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import orderBy from "lodash/orderBy";
 
-import Formulaire from "./Form";
+import Form from "./Form";
 import Table from "./Table";
 import Cdrawer from "../../component/Cdrawer";
 import Header from "../../component/Header";
 import NavBar from "../../component/NavBar";
-
-
 
 const invertDirection = {
     asc: "desc",
     desc: "asc"
 };
 
-class Notification extends Component {
+class Evenement extends Component {
     state = {
         open: false,
         data: [
             {
-                Id: "Tann",
+
                 nom: "Gounin",
-                date_notification: "tgounin0",
-                date_echeance: "tgounin0",
-                id_ville: "7"
+                Date: "tgounin0",
+                Adresse: "tgounin",
+                Ville:"fhkhggl"
 
             },
             {
-                Id: "Tann",
                 nom: "Gounin",
-                date_notification: "tgounin0",
-                date_echeance: "tgounin0",
-                id_ville: "7"
+                Date: "tgounin0",
+                Adresse: "tgounin",
+                Ville:"fhkhggl"
+
             },
             {
-                Id: "Tann",
                 nom: "Gounin",
-                date_notification: "tgounin0",
-                date_echeance: "tgounin0",
-                id_ville: "7"
+                Date: "tgounin0",
+                Adresse: "tgounin",
+                Ville:"fhkhggl"
+
             },
             {
-                Id: "Tann",
                 nom: "Gounin",
-                date_notification: "tgounin0",
-                date_echeance: "tgounin0",
-                id_ville: "7"
+                Date: "tgounin0",
+                Adresse: "tgounin",
+                Ville:"fhkhggl"
+
             }
 
         ],
@@ -99,9 +97,9 @@ class Notification extends Component {
             <MuiThemeProvider>
                 <div className="App">
                     <Cdrawer drawer={this.state.open} drawerButton={this.drawerButton}/>
-                    <Header  title={"Gestion des notifications"}  />
+                    <Header  title={"Gestion des evenements"}  />
                     <NavBar drawerButton={this.drawerButton}/>
-                    <Formulaire
+                    <Form
                         onSubmit={submission =>
                             this.setState({
                                 data: [...this.state.data, submission]
@@ -129,20 +127,16 @@ class Notification extends Component {
                                 prop: "nom"
                             },
                             {
-                                name: "DATE_NOTIFICATION",
-                                prop: "date_notification"
+                                name: "DATE",
+                                prop: "Date"
                             },
                             {
-                                name: "DATE_ECHEANCE",
-                                prop: "date_echeance"
+                                name: "ADRESSE",
+                                prop: "Adresse"
                             },
                             {
-                                name: "MESSAGE",
-                                prop: "message"
-                            },
-                            {
-                                name: "ID_VILLE",
-                                prop: "id_ville"
+                                name: "VILLE",
+                                prop: "Ville"
                             }
                         ]}
                     />
@@ -152,4 +146,4 @@ class Notification extends Component {
     }
 }
 
-export default Notification;
+export default Evenement;

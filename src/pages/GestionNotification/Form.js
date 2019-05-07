@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-
+import axios from "axios";
 
 
 export default class Formulaire extends Component {
-
-
     state = {
-
-        Nom: "",
-        Date: "",
-        Region: ""
-
+        nom: "",
+        date_notification: "",
+        date_echeance: "",
+        message:"",
+        id_ville: ""
     };
 
 
@@ -28,8 +26,11 @@ export default class Formulaire extends Component {
         const errors = {
             idError: "",
             nomError: "",
-            dateError: "",
-            regionError: ""
+            date_notificationError: "",
+            date_echeanceError: "",
+            id_villeError:"",
+            messageError: ""
+
 
         };
 
@@ -44,6 +45,25 @@ export default class Formulaire extends Component {
         return isError;
     };
 
+    postNotification(){
+        const notification = {
+            nom: this.state.nom,
+            date_notification:this.state.date_notification,
+            date_echeance:this.state.date_echeance,
+            message:this.state.message,
+            id_ville:this.state.id_ville,
+
+
+        };
+        axios.post(`http://localhost:80/notification`, { notification })
+            .then(res => {
+                console.log(res);
+                console.log(res.notification);
+            })
+    }
+
+
+
     onSubmit = e => {
         e.preventDefault();
         const err = this.validate();
@@ -53,13 +73,19 @@ export default class Formulaire extends Component {
             this.setState({
 
                 idError: "",
-                Nom: "",
+                nom: "",
                 nomError: "",
-                Date: "",
-                dateError: "",
-                Region: "",
-                regionError: ""
+                date_notification: "",
+                date_notificationError: "",
+                date_echeance:"",
+                date_echeanceError:"",
+                message:"",
+                messageError:"",
+                id_ville:"",
+                id_villeError:""
+
             });
+            this.postNotification();
         }
     };
 
@@ -71,34 +97,57 @@ export default class Formulaire extends Component {
 
                 <br />
                 <TextField
-                    name="Nom"
+                    name="nom"
                     hintText="Nom"
                     floatingLabelText="Nom"
-                    value={this.state.Nom}
+                    value={this.state.nom}
                     onChange={e => this.change(e)}
                     errorText={this.state.nomError}
                     floatingLabelFixed
                 />
                 <br />
                 <TextField
-                    name="Date"
+                    name="date_notification"
+                    floatingLabelText="DATE de NOTIFICATION"
                     date="date"
-                    label="Date"
+                    label="date_notification"
                     type="date"
                     InputLabelProps={{
-                    shrink: true,
-                }}
-                    value={this.state.date}
+                        shrink: true,
+                    }}
+                    value={this.state.date_notification}
                     onChange={e => this.change(e)}
                 />
+                <TextField
+                    name="date_echeance"
+                    floatingLabelText="DATE ECHEANCE"
+                    date="date"
+                    label="date_echeance"
+                    type="date"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={this.state.date_echeance}
+                    onChange={e => this.change(e)}
+                />
+                <TextField
+                    name="message"
+                    hintText="Votre Message"
+                    floatingLabelText="Message"
+                    value={this.state.message}
+                    onChange={e => this.change(e)}
+                    errorText={this.state.messageError}
+                    floatingLabelFixed
+                />
+
 
                 <TextField
-                    name="Region"
-                    hintText="Region"
-                    floatingLabelText="Region"
-                    value={this.state.Region}
+                    name="id_ville"
+                    hintText="Id_Ville"
+                    floatingLabelText="Id_ville"
+                    value={this.state.id_ville}
                     onChange={e => this.change(e)}
-                    errorText={this.state.regionError}
+                    errorText={this.state.id_villeError}
                     floatingLabelFixed
                 />
 

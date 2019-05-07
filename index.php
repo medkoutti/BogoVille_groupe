@@ -4,15 +4,18 @@
 require 'vendor/autoload.php';
 
 use backend\RequestType;
+use backend\CurlRequestGenerator;
 
+
+ini_set('display_errors',true);
 $configuration = [
     'settings' => [
-        'displayErrorDetails' => false,
+        'displayErrorDetails' => true,
     ],
 ];
 $c = new \Slim\Container($configuration);
 
-// instantiate the App object
+// instantiate the Notification object
 $app = new \Slim\App($c);
 
 
@@ -26,6 +29,7 @@ $app->get('/', function ($request, $response, $args) use($content){
 $app->get('/{model}', function ($request, $response, $args){
 
         $generatron = new CurlRequestGenerator(RequestType::$GET, new CurlRequestData($args['model']));
+
         return $generatron->curlRequest();
 
 });
@@ -60,7 +64,6 @@ $app->put('\{model}\{id}', function ($request, $response, $args) use ($content){
     return $generatron->curlRequest();
 
 });
-
 
 // Run application
 $app->run();
