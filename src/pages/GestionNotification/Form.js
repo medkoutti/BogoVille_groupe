@@ -34,9 +34,6 @@ export default class Formulaire extends Component {
 
         };
 
-
-
-
         this.setState({
             ...this.state,
             ...errors

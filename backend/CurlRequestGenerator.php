@@ -13,7 +13,11 @@ class CurlRequestGenerator
 
     private $requestType;
     private $requestData;
-    private $url = "bogoville.xyz/rest/";
+
+
+
+    private $url = "http://bogoville.xyz/rest/";
+
 
     /**
      * CurlRequestGenerator constructor.
@@ -40,7 +44,6 @@ class CurlRequestGenerator
         return self::generateRequest(curl_init($this->url), $this->requestType, $this->requestData->getDatas());
     }
 
-
     private function setCurlBasicAuthentification($ch, $user='admin', $pass='admin'){
         curl_setopt($ch, CURLOPT_USERPWD, "$user:$pass");
     }
@@ -61,13 +64,44 @@ class CurlRequestGenerator
         if($datas){
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($datas));
         }
+        return $this->executeCurl($ch);
+    }
+
+    /**
+     * Va chercher les info d'un utilisateur à partir de son courriel
+     * @param $email Courriel de l'usager
+     * @return bool|string
+     */
+    public function getUserWithEmail(string $email){
+        $this->url = $this->url . "usager/validate/" . urlencode($email) . "/val";
+        var_dump($this->url);
+        $ch = curl_init($this->url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+        $this->setCurlBasicAuthentification($ch);
+        return $this->executeCurl($ch);
+    }
+
+    public function getAllValueFromAGivenSubfield(){
+        $this->url = $this->url . $this->requestData->getDatas()['field'] . DIRECTORY_SEPARATOR . $this->requestData->getDatas()['fieldValue'] . DIRECTORY_SEPARATOR . $this->requestData->getModel();
+        $ch = curl_init($this->url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return $this->executeCurl($ch);
+    }
+
+    /**
+     * Petite commande pour éviter de réécrire la même fonction tout le temp
+     * @param $ch
+     * @return bool|string
+     */
+    private function executeCurl($ch){
         $info = curl_exec($ch);
         if(curl_errno($ch)){
+            (curl_errno($ch));
             $info = "Aucune information trouvée";
         }
         curl_close($ch);
         return $info;
     }
-
 
 }
